@@ -7,7 +7,7 @@ The Singleton pattern ensures that a class has only one instance and provides a 
 
 
 ## Implementation
-The `DatabaseConnection` class represents a fictitious connection to a PostgreSQL database. The private constructor, along with the `getInstance` method and the instance attribute being part of the class itself, ensures that the class can only be instantiated once per JVM execution. Assigning a value to the instance at class initialization guarantees thread safety, although at the cost of lazy loading.
+The `DatabaseConnection` class represents a fictitious connection to a PostgreSQL database. The private constructor, along with the `getInstance` method and the instance attribute being part of the class itself, ensures that the class can only be instantiated once per JVM execution. By using the `private static final` instance, the class is initialized at class loading time, ensuring thread safety without requiring explicit synchronization.
 
 ### DatabaseConnection.java
 ```java
