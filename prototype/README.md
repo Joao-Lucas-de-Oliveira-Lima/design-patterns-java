@@ -9,7 +9,7 @@ The Prototype pattern is used to create a new object by copying an existing obje
 
 ## Implementation
 
-The `ChessPiece` class represents a generic chess piece with attributes such as color, current position, point value, and alive status. The `Pawn` class extends `ChessPiece` and adds additional attributes such as promotion and first move bonus. The `Pawn` class uses a **protected constructor** to ensure that objects can only be instantiated through the `clone` method.
+The `ChessPiece` class represents a generic chess piece with attributes such as color, current position, point value, and alive status. The `Pawn` class extends `ChessPiece` and adds additional attributes such as promotion and first move bonus. The `Pawn` class features a **protected constructor** to restrict direct instantiation. This design ensures that objects are created either through the `clone` method or via a default no-argument constructor.
 
 The `clone` method in the `Pawn` class creates a new instance of `Pawn` by copying the attributes of the existing `Pawn` object. This allows for the creation of new `Pawn` objects without directly instantiating them.
 
