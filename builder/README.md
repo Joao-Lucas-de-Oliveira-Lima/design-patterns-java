@@ -1,16 +1,49 @@
 # Builder Pattern
 
-## Description
-- Type of Pattern: Creational
+## 📚 References
 
-The Builder pattern is used to construct a complex object step by step. It separates the construction of a complex object from its representation, allowing the same construction process to create different representations. This pattern is useful when the object to be created has multiple optional parameters.
-## Implementation
+- [Refactoring Guru - Builder Pattern](https://refactoring.guru/design-patterns/builder)
+- Design Patterns: Elements of Reusable Object-Oriented Software
 
-The `Order` class represents a food order, which can include optional components such as a snack, drink, condiment, and side dish. The `Order` class uses a **protected constructor**, ensuring that objects can only be instantiated through the `OrderBuilder`.
-The `OrderBuilder` class has a private constructor and a static method called `builder`, which returns a new instance of `OrderBuilder`. Each method in the builder, which accepts an argument, corresponds to a setter in the `Order` class and returns the builder instance itself, enabling **method chaining**. Once all attributes are set, the `build()` method can be called to return the fully constructed `Order` object.
+---
 
+## 📖 Description
 
-### Order.java
+The **Builder Pattern** is a creational design pattern that constructs a complex object step by step. It separates the construction of a complex object from its representation, allowing the same construction process to create different representations. This pattern is useful when the object to be created has multiple optional parameters.
+
+- **Category:** Creational Pattern  
+- **Intent:** Separate the construction of a complex object from its representation so that the same construction process can create different representations.
+
+---
+
+## 🔧 Problem
+
+Creating complex objects directly within a constructor or using a telescoping constructor pattern can lead to code that is difficult to read and maintain.
+
+---
+
+## 💡 Solution
+
+The **Builder Pattern** suggests defining a separate builder object that encapsulates the construction of a complex object. The builder provides a fluent interface for configuring the object step by step.
+
+- **Advantages:**
+  - Simplifies the creation of complex objects.
+  - Provides a clear and fluent interface for object construction.
+  - Allows different representations of the constructed object.
+
+---
+
+## 🛠 Structure
+
+1. **Order:** Represents the complex object being built.
+2. **OrderBuilder:** Declares the steps required to build the order.
+
+---
+
+## 📋 Implementation
+
+### `Order.java`
+Represents a food order, which can include optional components such as a snack, drink, condiment, and side dish.
 ```java
 package model;
 
@@ -36,7 +69,7 @@ public class Order {
     // Additional methods
 }
 ```
-### OrderBuilder.java
+### `OrderBuilder.java`
 ```java
 package model;
 
@@ -81,7 +114,7 @@ public class OrderBuilder {
 }
 ```
 
-### App.java
+### `App.java`
 ```java
 // Imports
 
@@ -109,5 +142,5 @@ public class App {
                 .build();
     }
 }
-
 ```
+
