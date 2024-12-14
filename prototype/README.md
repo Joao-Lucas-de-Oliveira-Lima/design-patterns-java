@@ -1,19 +1,50 @@
 # Prototype Pattern
 
- Prototype Pattern
+## 📚 References
 
-## Description
-- Type of Pattern: Creational
+- [Refactoring Guru - Prototype Pattern](https://refactoring.guru/design-patterns/prototype)
+- Design Patterns: Elements of Reusable Object-Oriented Software
 
-The Prototype pattern is used to create a new object by copying an existing object, known as the prototype. This pattern is useful when the cost of creating a new object is expensive or complex. It allows for the creation of new objects without knowing the exact class of the object that will be created.
+---
 
-## Implementation
+## 📖 Description
 
-The `ChessPiece` class represents a generic chess piece with attributes such as color, current position, point value, and alive status. The `Pawn` class extends `ChessPiece` and adds additional attributes such as promotion and first move bonus. The `Pawn` class uses a **protected constructor** to ensure that objects can only be instantiated through the `clone` method.
+The **Prototype Pattern** is a creational design pattern that enables the creation of new objects by copying an existing prototype. This is useful when creating an object is costly or complex.
 
-The `clone` method in the `Pawn` class creates a new instance of `Pawn` by copying the attributes of the existing `Pawn` object. This allows for the creation of new `Pawn` objects without directly instantiating them.
+- **Category:** Creational Pattern  
+- **Intent:** Facilitate object creation without depending on their concrete classes, using cloning as an alternative to direct instantiation.
 
-### ChessPiece.java
+---
+
+## 🔧 Problem
+
+Creating an exact copy of an object manually can be unmanageable for complex objects and tightly couples the code to the concrete class.
+
+---
+
+## 💡 Solution
+
+The **Prototype Pattern** delegates the cloning process to the object itself using a `clone` method, removing the client’s dependency on the concrete class.
+
+- **Advantages:**
+  - Copies complex objects without coupling the client code.
+  - Enables creating pre-configured prototypes for reuse.
+
+---
+
+## 🛠 Structure
+
+1. **Prototype Interface:** Declares the `clone` method.
+2. **Concrete Prototype:** Implements the `clone` method to create full copies of the object.
+3. **Client:** Uses the `clone` method to create new objects without needing to know their concrete classes
+
+---
+
+## 📋 Implementation
+
+### `ChessPiece.java`
+Represents a generic chess piece with attributes like color, position, point value, and life status.
+
 ```java
 package model;
 
@@ -46,12 +77,12 @@ public abstract class ChessPiece {
                "Point Value: " + this.pointValue + "\n" +
                "Alive: " + this.alive + "\n";
     }
-
-    // Additional methods
 }
 ```
 
-### Pawn.java
+### `Pawn.java`
+The `Pawn` class extends `ChessPiece` and implements the `clone` method, ensuring that new pawns are created by copying an existing prototype.
+
 ```java
 package model;
 
@@ -81,18 +112,17 @@ public class Pawn extends ChessPiece {
                "Promotion: " + this.promotion + "\n" +
                "First Move Bonus: " + this.firstMoveBonus + "\n";
     }
-
-    // Additional methods
 }
 ```
 
-### App.java
+### `App.java`
+An example of using the Prototype Pattern to clone a `Pawn` object.
+
 ```java
 import model.Pawn;
 
 public class App {
-    public static void main(String[] args) throws Exception {
-        // Pawn created empty and then set
+    public static void main(String[] args) {
         Pawn pawn = new Pawn();
         pawn.setAlive(true);
         pawn.setColor("White");
@@ -101,20 +131,10 @@ public class App {
         pawn.setPromotion(false);
         pawn.setFirstMoveBonus(true);
 
-        // Pawn cloned using the prototype pattern
+        // Cloning the pawn with a new position
         Pawn pawnClone = (Pawn) pawn.clone("A3");
 
         System.out.println(pawnClone.toString());
-
-        /*
-         * output:
-         * Color: White
-         * Current Position: A3
-         * Point Value: 1
-         * Alive: true
-         * Promotion: false
-         * First Move Bonus: true
-         */
     }
 }
 ```
