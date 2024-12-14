@@ -1,15 +1,52 @@
 # Singleton Pattern
 
-## Description
-- Type of Pattern: Creational
+## 📚 References
 
-The Singleton pattern ensures that a class has only one instance and provides a global point of access to that instance. This is useful when exactly one object is needed to coordinate actions across the system. The Singleton pattern is often used for logging, database connections, and configuration settings.
+- [Refactoring Guru - Singleton Pattern](https://refactoring.guru/design-patterns/singleton)
+- Design Patterns: Elements of Reusable Object-Oriented Software
 
+---
 
-## Implementation
-The `DatabaseConnection` class represents a fictitious connection to a PostgreSQL database. The private constructor, along with the `getInstance` method and the instance attribute being part of the class itself, ensures that the class can only be instantiated once per JVM execution. By using the `private static final` instance, the class is initialized at class loading time, ensuring thread safety without requiring explicit synchronization.
+## 📖 Description
 
-### DatabaseConnection.java
+The **Singleton Pattern** is a creational design pattern that ensures a class has only one instance and provides a global point of access to that instance. This is useful when exactly one object is needed to coordinate actions across the system.
+
+- **Category:** Creational Pattern  
+- **Intent:** Ensure a class has only one instance and provide a global point of access to it.
+
+---
+
+## 🔧 Problem
+
+When a class should have exactly one instance, and clients can access this instance from anywhere in the program.
+
+---
+
+## 💡 Solution
+
+The **Singleton Pattern** restricts the instantiation of a class to one "single" instance. This is achieved by:
+- Making the constructor private.
+- Creating a static method that returns the instance.
+
+- **Advantages:**
+  - Controlled access to the single instance.
+  - Reduced namespace pollution.
+  - Permits refinement of operations and representation.
+  - Permits a variable number of instances.
+  - More flexible than class operations.
+
+---
+
+## 🛠 Structure
+
+1. **Singleton Class:** Declares a static method to provide a single instance and a private constructor to prevent direct instantiation.
+
+---
+
+## 📋 Implementation
+
+### `DatabaseConnection.java`
+Represents a fictitious connection to a PostgreSQL database.
 ```java
 package db;
 
