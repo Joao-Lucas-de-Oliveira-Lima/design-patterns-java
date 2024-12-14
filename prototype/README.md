@@ -34,9 +34,8 @@ The **Prototype Pattern** delegates the cloning process to the object itself usi
 
 ## 🛠 Structure
 
-1. **Prototype Interface:** Declares the `clone` method.
-2. **Concrete Prototype:** Implements the `clone` method to create full copies of the object.
-3. **Client:** Uses the `clone` method to create new objects without needing to know their concrete classes
+1. **Abstract Class ChessPiece:** Declares the `clone` method.
+2. **Concrete Prototype Pawn:** Implements the `clone` method to create full copies of the object.
 
 ---
 
