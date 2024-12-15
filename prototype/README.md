@@ -34,9 +34,9 @@ The **Prototype Pattern** delegates the cloning process to the object itself usi
 
 ## 🛠 Structure
 
-1. **Prototype Interface:** Declares the `clone` method.
-2. **Concrete Prototype:** Implements the `clone` method to create full copies of the object.
-3. **Client:** Uses the `clone` method to create new objects without needing to know their concrete classes
+1. **Prototype Interface:** Declares the `clone` method in the `ChessPiece` class.
+2. **Concrete Prototype:** The `Pawn` class implements the `clone` method to create full copies of the object, including setting new attributes like `currentPosition`.
+3. **Client:** The `App` class demonstrates the cloning process by creating a new `Pawn` object using the `clone` method without direct instantiation.
 
 ---
 
@@ -135,7 +135,15 @@ public class App {
         Pawn pawnClone = (Pawn) pawn.clone("A3");
 
         System.out.println(pawnClone.toString());
+
+        /* Output:
+           Color: White
+           Current Position: A3
+           Point Value: 1
+           Alive: true
+           Promotion: false
+           First Move Bonus: true
+        */
     }
 }
 ```
-

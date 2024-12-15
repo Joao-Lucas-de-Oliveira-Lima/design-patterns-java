@@ -35,8 +35,9 @@ The **Builder Pattern** suggests defining a separate builder object that encapsu
 
 ## 🛠 Structure
 
-1. **Order:** Represents the complex object being built.
-2. **OrderBuilder:** Declares the steps required to build the order.
+1. **Order:** Represents the complex object being built, containing optional components like `snack`, `drink`, `condiment`, and `sideDish`.
+2. **OrderBuilder:** Provides a interface for building an `Order` object step by step.
+3. **App:** Demonstrates the usage of `OrderBuilder` to construct `Order` objects with different configurations.
 
 ---
 
@@ -78,15 +79,11 @@ package model;
 public class OrderBuilder {
     private Order order = new Order();
 
-    // Private constructor to prevent direct instantiation
     private OrderBuilder() {}
 
-    // Static method to start the builder process
     public static OrderBuilder builder() {
         return new OrderBuilder();
-    }
 
-    // Builder methods for setting attributes
     public OrderBuilder snack(Snack snack) {
         order.setSnack(snack);
         return this;
@@ -120,7 +117,6 @@ public class OrderBuilder {
 
 public class App {
     public static void main(String[] args) {
-        // Different ways to create an Order object
 
         // Order with all components
         Order order01 = OrderBuilder.builder()
