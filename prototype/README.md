@@ -9,7 +9,11 @@
 
 ## 📖 Description
 
+<<<<<<< HEAD
 The **Prototype Pattern** is a creational design pattern that enables the creation of new objects by copying an existing prototype. This is useful when creating an object is costly or complex.
+=======
+The `ChessPiece` class represents a generic chess piece with attributes such as color, current position, point value, and alive status. The `Pawn` class extends `ChessPiece` and adds additional attributes such as promotion and first move bonus. The `Pawn` class features a **protected constructor** to restrict direct instantiation. This design ensures that objects are created either through the `clone` method or via a default no-argument constructor.
+>>>>>>> f1f86bc (docs: update README.md file in prototype directory)
 
 - **Category:** Creational Pattern  
 - **Intent:** Facilitate object creation without depending on their concrete classes, using cloning as an alternative to direct instantiation.
