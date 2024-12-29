@@ -1,0 +1,7 @@
+*.vscode
+*lib
+*bin
+*class
+out
+.idea
+design-patterns-java.iml
