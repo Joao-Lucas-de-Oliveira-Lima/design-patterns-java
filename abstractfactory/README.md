@@ -1,93 +1,88 @@
-# Abstract Factory Design Pattern
+# Abstract Factory
 
 ## About the Pattern
-The **Abstract Factory** design pattern provides an interface for creating families of related or dependent objects without specifying their concrete classes. Its main goal is to allow a system to work with various groups of related objects while keeping the client code decoupled from specific implementations.
+The **Abstract Factory** design pattern provides an interface for creating families of related or dependent objects without specifying their concrete classes.
 
-- **Type:** Creational
+## Implementation
 
----
+### Creating Component Families
+Three main families of components are created: **Button**, **CheckBox**, and **TextField**. Each has its own interface and is associated with a specific operating system.
 
-## Project Structure
-```
-abstractfactory/
-├── src/
-│   ├── app/                # Application logic
-│   ├── component/          # GUI components
-│   │   ├── button/         # Button interfaces and implementations
-│   │   ├── checkbox/       # CheckBox interfaces and implementations
-│   │   └── textfield/      # TextField interfaces and implementations
-│   ├── factory/            # Abstract Factory and Concrete Factories
-│   └── Main.java           # Main application entry point
-└── README.md               # Project documentation
-```
-
----
-
-## Solution
-This project demonstrates the Abstract Factory pattern in the context of GUI components for a user interface (UI). 
-
-### Component Interfaces
-Define the structure and methods for components.
-
-**Code Example:**
+- **Buttons**
 ```java
 public interface Button {
     void render();
     void onClick();
 }
+
+public class LinuxButton implements Button {
+    // Overridden methods
+}
+
+public class MacButton implements Button {
+    // Overridden methods
+}
+
+public class WinButton implements Button {
+    // Overridden methods
+}
 ```
 
+- **CheckBox**
 ```java
 public interface CheckBox {
     void render();
     boolean isChecked();
     void toggle();
 }
+
+public class LinuxCheckBox implements CheckBox {
+    private boolean checked = false;
+    // Overridden methods
+}
+
+public class MacCheckBox implements CheckBox {
+    private boolean checked = false;
+    // Overridden methods
+}
+
+public class WinCheckBox implements CheckBox {
+    private boolean checked = false;
+    // Overridden methods
+}
 ```
 
+- **TextField**
 ```java
 public interface TextField {
     void render();
     void setText(String text);
     String getText();
 }
-```
 
-### Concrete Components
-Provide specific implementations of the component interfaces. For instance, `LinuxButton` contains logic (e.g., a `System.out.println` statement) to indicate it is a Linux-specific button.
+public class LinuxTextField implements TextField {
+    // Overridden methods
+}
 
-**Code Example:**
-```java
-public class LinuxButton implements Button {
-    @Override
-    public void render() {
-        System.out.println("Rendering a Linux button.");
-    }
+public class MacTextField implements TextField {
+    // Overridden methods
+}
 
-    @Override
-    public void onClick() {
-        System.out.println("Linux button clicked.");
-    }
+public class WindowsTextField implements TextField {
+    // Overridden methods
 }
 ```
 
-### Abstract Factory Interface
-Declares methods for creating related objects, such as `Button`, `CheckBox`, and `TextField`.
+### Creating Factories
+An interface **GUIFactory** is created to represent the factories. Each factory method returns an object of a specific interface type, and each concrete factory returns objects that match the corresponding OS interface.
 
-**Code Example:**
 ```java
 public interface GUIFactory {
     Button createButton();
     CheckBox createCheckBox();
     TextField createTextField();
 }
-```
 
-### Concrete Factories
-Implement the abstract factory interface to produce components tailored to specific platforms. For example, the `LinuxGUIFactory` creates `LinuxButton`, `LinuxCheckBox`, and `LinuxTextField`.
-
-**Code Example:**
-```java
 public class LinuxGUIFactory implements GUIFactory {
     @Override
     public Button createButton() {
@@ -104,12 +99,19 @@ public class LinuxGUIFactory implements GUIFactory {
         return new LinuxTextField();
     }
 }
+
+public class MacGUIFactory implements GUIFactory {
+    // Similar to LinuxGUIFactory
+}
+
+public class WindowsGUIFactory implements GUIFactory {
+    // Similar to LinuxGUIFactory
+}
 ```
 
-### Application Logic
-The `App` class holds a `GUIFactory` attribute and uses it to render the UI by calling methods on the factory. Based on the type of factory passed to the constructor (e.g., `LinuxGUIFactory`, `WindowsGUIFactory`), the application displays components for the corresponding platform.
+### Centralizing the Component Logic in a Factory
+The **App** class contains a **GUIFactory** and, in the `renderUI` method, it calls all output methods of its components.
 
-**Code Example:**
 ```java
 public class App {
     private GUIFactory factory;
@@ -134,36 +136,24 @@ public class App {
         textField.setText("Sample text");
         System.out.println("Text field content: " + textField.getText());
     }
+
+    // Other methods such as setters and getters
 }
 ```
 
-### Main class
-The `Main` class creates an instance of the `App` class, passing different types of factories to demonstrate the flexibility of the pattern in action.
+### Usage
+Since each factory implements **GUIFactory**, it is possible to assign new factories dynamically using `setFactory`. Each factory provides its own distinct set of components while following the same contract.
 
-**Code Example:**
 ```java
-public class Main {
-    public static void main(String[] args) {
-        App app = new App(new LinuxGUIFactory());
+App app = new App(new LinuxGUIFactory());
+app.renderUI();
+System.out.print(System.lineSeparator());
 
-        app.renderUI();
-        System.out.print(System.lineSeparator());
-                
-        app.setFactory(new MacGUIFactory());
+app.setFactory(new MacGUIFactory());
+app.renderUI();
+System.out.print(System.lineSeparator());
 
-        app.renderUI();
-        System.out.print(System.lineSeparator());
-
-        app.setFactory(new WindowsGUIFactory());
-
-        app.renderUI();
-        System.out.print(System.lineSeparator());
-    }
-}
+app.setFactory(new WindowsGUIFactory());
+app.renderUI();
+System.out.print(System.lineSeparator());
 ```
-
----
-
-## References
-- [Refactoring Guru - Abstract Factory Pattern](https://refactoring.guru/design-patterns/abstract-factory)
-- *Design Patterns: Elements of Reusable Object-Oriented Software*

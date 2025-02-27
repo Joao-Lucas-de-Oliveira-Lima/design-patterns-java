@@ -1,6 +1,8 @@
-# Design Patterns in Java
+# Design Patterns
 
-This repository contains implementations of design patterns described in the book *Design Patterns: Elements of Reusable Object-Oriented Software*. Each pattern is implemented in Java, and new patterns will be added over time as part of an ongoing learning process.
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+
+This repository contains implementations of design patterns described in the book *Design Patterns: Elements of Reusable Object-Oriented Software*.
 
 ---
 
@@ -21,9 +23,6 @@ This repository contains implementations of design patterns described in the boo
 
 ---
 
-## About the Repository
-This project serves as a personal challenge focused on learning and implementing reusable, elegant, and loosely coupled code solutions. It also serves as a reference and learning tool for developers interested in exploring design patterns. Each implementation includes well-documented code to explain the structure and purpose of the pattern.
-
 ### Prerequisites
 
 - [Java JDK](https://www.oracle.com/java/technologies/downloads/)
@@ -42,5 +41,8 @@ Once compiled, run the code with this command:
 ```bash
 java -cp bin <main_class>
 ```
+
+## Study material
+[Refactoring Guru](https://refactoring.guru/design-patterns)
 
 ---

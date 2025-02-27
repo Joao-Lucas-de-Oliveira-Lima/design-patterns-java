@@ -1,51 +1,33 @@
-# Factory Method Design Pattern
+# Factory Method Design Pattern  
 
-## About the Pattern
-The **Factory Method** design pattern defines a common interface for object creation, allowing subclasses to determine the specific type to instantiate. It's particularly useful when there are multiple variations of objects, allowing flexibility in the creation process.
+## About the Pattern  
 
-- **Type:** Creational
+The **Factory Method** design pattern defines a common interface for object creation, allowing subclasses to determine which specific type to instantiate. 
+## Implementation  
 
----
+### Interface `Relatory` and Concrete Classes  
 
-## Project Structure
-```
-factory/
-├── src/
-│   ├── App.java    # Main application logic
-│   ├── model/      # Models for different report types
-│   └── relatory/   # Factories for creating report objects
-└── README.md       # Project documentation
-```
+A `Relatory` interface is created along with three concrete classes that implement it. Each type of `Relatory` will have its own corresponding factory method.  
 
----
-
-## Solution
-This project demonstrates the Factory design pattern by creating different types of report objects (e.g., CSV, Excel, PDF) through specialized factory classes.
-
-### Abstract Base Class: Relatory
-The `Relatory` interface defines the common behavior that all reports must implement.
-
-**Code Example:**
 ```java
 public interface Relatory {
     void generateRelatory();
 }
-```
 
-### Concrete Implementations
-Examples of classes implementing the Relatory interface:
-
-**RelatoryCsv:**
-```java
 public class RelatoryCsv implements Relatory {
     @Override
     public void generateRelatory() {
-        System.out.println("Generating CSV relatory...");
+        System.out.println("Generating CSV report...");
     }
 }
-```
-**RelatoryPdf:**
-```java
+
+public class RelatoryExcel implements Relatory {
+    @Override
+    public void generateRelatory() {
+        System.out.println("Generating Excel report...");
+    }
+}
+
 public class RelatoryPdf implements Relatory {
     @Override
     public void generateRelatory() {
@@ -54,19 +36,15 @@ public class RelatoryPdf implements Relatory {
 }
 ```
 
-### Factory Classes
-#### Abstract Factory Interface
-The `RelatoryFactory` interface declares the factory method `createRelatory`, which returns a `Relatory` object.
+### Factory Methods  
+
+A `RelatoryFactory` interface is created, containing a method `createRelatory`, which returns a `Relatory` object. Each concrete factory class implements this interface and returns the corresponding type of `Relatory`.  
 
 ```java
 public interface RelatoryFactory {
     Relatory createRelatory();
 }
-```
-### Concrete Factory Implementations
-Each concrete factory implements the `createRelatory` method to return a specific type of report object.
-**RelatoryCsvFactory:**
-```java
+
 public class RelatoryCsvFactory implements RelatoryFactory {
     @Override
     public Relatory createRelatory() {
@@ -75,9 +53,16 @@ public class RelatoryCsvFactory implements RelatoryFactory {
         return relatoryCsv;
     }
 }
-```
-**RelatoryPdfFactory:**
-```java
+
+public class RelatoryExcelFactory implements RelatoryFactory {
+    @Override
+    public Relatory createRelatory() {
+        RelatoryExcel relatoryExcel = new RelatoryExcel();
+        relatoryExcel.generateRelatory();
+        return relatoryExcel;
+    }
+}
+
 public class RelatoryPdfFactory implements RelatoryFactory {
     @Override
     public Relatory createRelatory() {
@@ -88,26 +73,21 @@ public class RelatoryPdfFactory implements RelatoryFactory {
 }
 ```
 
-### Main Application
-The `App` class demonstrates how to use the Factory design pattern. It initializes specific factory classes to create and manipulate reports dynamically.
+### Usage  
 
-**Code Example:**
+Since `RelatoryFactory` returns a `Relatory`, it can instantiate objects of any class that implements this interface. Additionally, because `RelatoryFactory` itself is an interface, it can be assigned to any of its concrete implementations.  
+
+This approach enables the creation of new `RelatoryFactory` classes and new types of reports without modifying existing components, ensuring compatibility through well-defined contracts.  
+
 ```java
-public class App {
-    public static void main(String[] args) {
-        RelatoryFactory factory;
+RelatoryFactory factory;
 
-        factory = new RelatoryPdfFactory();
-        Relatory pdfReport = factory.createRelatory();
+factory = new RelatoryPdfFactory();
+Relatory pdfReport = factory.createRelatory();
 
-        factory = new RelatoryCsvFactory();
-        Relatory csvReport = factory.createRelatory();
-    }
-}
+factory = new RelatoryCsvFactory();
+Relatory csvReport = factory.createRelatory();
+
+factory = new RelatoryExcelFactory();
+Relatory excelReport = factory.createRelatory();
 ```
-
----
-
-## References
-- [Refactoring Guru - Factory Pattern](https://refactoring.guru/design-patterns/factory-method)
-- *Design Patterns: Elements of Reusable Object-Oriented Software*

@@ -1,93 +1,81 @@
-# Prototype Design Pattern
+# Prototype
 
 ## About the Pattern
-The **Prototype** design pattern allows for creating new objects by cloning an existing object, referred to as the prototype. This approach is especially useful when object creation is computationally expensive or when you need to generate objects with similar attributes but slight variations.
+The **Prototype** design pattern allows for creating new objects by cloning an existing object, referred to as the prototype.
 
-- **Type:** Creational
+## Implementation
 
----
+### ChessPiece (Abstract Class)
+`ChessPiece` is an abstract class and cannot be instantiated directly. It serves as a superclass for specific chess pieces. Its default constructor is protected, meaning only classes within the same package or subclasses can invoke it. Additionally, a second protected constructor accepts an instance of `ChessPiece`, allowing attributes to be copied from the provided object.
 
-## Project Structure
-```
-prototype/
-├── src/
-│   ├── App.java               # Main application logic
-│   └── model/
-│       ├── ChessPiece.java    # Abstract class for chess pieces
-│       └── Pawn.java          # Concrete implementation using Prototype
-└── README.md                  # Documentation
-```
+The `clone` method is abstract and must be overridden by subclasses. This method is responsible for cloning the object and should return an instance of `ChessPiece`.
 
----
-
-## Solution
-This project demonstrates the Prototype pattern using chess piece objects. The pattern simplifies the creation of chess pieces by allowing them to be cloned, rather than instantiating new objects from scratch.
-
-### Abstract Class: ChessPiece
-The `ChessPiece` class serves as the base class for all chess pieces. It defines shared attributes, such as `color` and `currentPosition`, and requires subclasses to implement the `clone` method. A protected constructor is used to initialize a new object by copying attributes from an existing instance.
-
-**Code Example:**
 ```java
 public abstract class ChessPiece {
     private String color;
     private String currentPosition;
+    private Integer pointValue;
+    private Boolean alive;
 
     protected ChessPiece() {}
 
     protected ChessPiece(ChessPiece target) {
-        this.color = target.color;
-        this.currentPosition = target.currentPosition;
+        if (target != null) {
+            this.color = target.color;
+            this.currentPosition = target.currentPosition;
+            this.pointValue = target.pointValue;
+            this.alive = target.alive;
+        }
     }
 
-    public abstract ChessPiece clone(String newPosition);
+    public abstract ChessPiece clone(String currentPosition);
+
+    // Other methods like getters and setters
 }
 ```
 
-### Concrete Class: Pawn
-The `Pawn` class extends `ChessPiece` and provides specific functionality for pawn pieces. It allows objects to be created either through the default constructor or by cloning an existing `Pawn` instance using the `clone` method.
+### Pawn (Concrete Implementation)
+The `Pawn` class overrides the `clone` method. This method calls the `Pawn` constructor, passing itself as an argument to enable attribute copying. The constructor of `Pawn` assigns specific attributes and invokes the superclass constructor using `super()`. Since `Pawn` is a subclass, upcasting occurs automatically.
 
-**Code Example:**
+The returned object is a clone of the original, with the exception of the `currentPosition` attribute. This attribute is explicitly set after cloning to ensure that the new piece has a different position on the chessboard. The default constructor is public, as an original object must first be created before clones can be generated and assigned values using setter methods.
+
 ```java
 public class Pawn extends ChessPiece {
-    private boolean promotion;
+    private Boolean promotion;
+    private Boolean firstMoveBonus;
 
     public Pawn() {}
 
     protected Pawn(Pawn target) {
         super(target);
-        this.promotion = target.promotion;
+        if (target != null) {
+            this.promotion = target.promotion;
+            this.firstMoveBonus = target.firstMoveBonus;
+        }
     }
-
+    
     @Override
-    public ChessPiece clone(String newPosition) {
-        Pawn clone = new Pawn(this);
-        clone.setCurrentPosition(newPosition);
-        return clone;
+    public ChessPiece clone(String currentPosition) {
+        Pawn pawnClone = new Pawn(this);
+        pawnClone.setCurrentPosition(currentPosition);
+        return pawnClone;
     }
+
+    // Other methods like getters and setters
 }
 ```
 
-### Main Application
-The `App` class demonstrates how to use the Prototype pattern. A `Pawn` object is created, and then a clone is made with a new position. All attributes of the original pawn are copied to the cloned instance.
+### Object Creation Using the Default Constructor and Clone Method
+The object can be instantiated using the default constructor and then cloned using the `clone` method. Since the `clone` method is defined in the abstract class `ChessPiece`, it returns a `ChessPiece` type. Therefore, explicit downcasting is required when assigning the cloned object to a `Pawn` variable.
 
-**Code Example:**
 ```java
-public class App {
-    public static void main(String[] args) {
-        Pawn pawn = new Pawn();
-        pawn.setColor("White");
-        pawn.setCurrentPosition("A2");
+Pawn pawn = new Pawn();
+pawn.setAlive(true);
+pawn.setColor("White");
+pawn.setCurrentPosition("A2");
+pawn.setPointValue(1);
+pawn.setPromotion(false);
+pawn.setFirstMoveBonus(true);
 
-        Pawn clonedPawn = (Pawn) pawn.clone("A3");
-
-        System.out.println(clonedPawn);
-    }
-}
+Pawn pawnClone = (Pawn) pawn.clone("A3");
 ```
-
----
-
-## References
-- [Refactoring Guru - Prototype Pattern](https://refactoring.guru/design-patterns/prototype)
-- *Design Patterns: Elements of Reusable Object-Oriented Software*
-
