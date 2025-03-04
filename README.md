@@ -19,7 +19,7 @@ This repository contains implementations of design patterns described in the boo
 - *(To be implemented)*
 
 ### Behavioral Patterns
-- *(To be implemented)*
+- Strategy
 
 ---
 
